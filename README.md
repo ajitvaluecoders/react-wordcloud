@@ -1,81 +1,55 @@
-# ☁️ React Wordcloud
+# React Wordcloud
+Powerful React + D3 word cloud component with rich features. Based on the
+original word cloud generator: https://www.jasondavies.com/wordcloud/.
 
-Simple React + D3 wordcloud component with powerful features. Uses the [`d3-cloud`](https://github.com/jasondavies/d3-cloud) layout.
-
-![image](https://github.com/chrisrzhou/react-wordcloud/raw/master/wordcloud.png)
+![Example cloud of Twitter search results for “amazing”](http://www.jasondavies.com/wordcloud/amazing.png)
 
 ## Install
+Add to `package.json` with `yarn` or `npm`.
 
 ```bash
-yarn add react-wordcloud
+yarn add https://github.com/chrisrzhou/react-wordcloud.git
 ```
 
-Note that `react-wordcloud` requires `react^16.8.3` as a peer dependency.
+## Usage
 
-## Examples
-
-View all documented examples at https://react-wordcloud.netlify.com/
-
-A simple example using only required props:
-
+This is a simple example using minimal props.
 ```js
-import * as React from "react";
-import ReactWordcloud from "react-wordcloud";
+import * as React from 'react';
+
+import ReactWordCloud from 'react-wordcloud';
 
 const words = [
-  { text: "hello", value: 3 },
-  { text: "world", value: 12.5 },
-  { text: "github", value: 1 },
-  { text: "code", value: 1 }
+  {word: 'hello', value: 3},
+  {word: 'world', value: 1},
+  {word: 'github', value: 1},
+  {word: 'code', value: 1},
 ];
 
-function MyApp() {
+const WORD_COUNT_KEY = 'value';
+const WORD_KEY = 'word';
+
+const MyWordCloud = () => {
   return (
-    <div style={{ width: 600, height: 400 }}>
-      <ReactWordcloud words={words} />
+    <div style={{width: 600, height: 400}}>
+      <ReactWordCloud
+	words={words}
+	wordCountKey={WORD_COUNT_KEY}
+	wordKey={WORD_KEY}
+      />
     </div>
   );
-}
+};
+
+export default MyWordCloud;
 ```
 
-You can also run the examples locally:
+## Word Cloud Generator Example
+Check out the code in this [word cloud generator](https://github.com/chrisrzhou/wordcloud-generator)
+to see how to use `react-wordcloud` in production.
 
-```bash
-git clone git@github.com:chrisrzhou/react-wordcloud
+This generator allows you to tweak many properties of the word cloud component.
 
-cd react-wordcloud
-yarn
-yarn dev
-```
+It also demonstrates how we can parse string into words, and bind click actions
+on the words to highlight their occurrences in the original text.
 
-## Development
-
-### Main Dependencies
-
-- `react`
-- `d3`
-- `d3-cloud`
-- `tippy.js`
-
-### Codebase Overview
-
-- `index.tsx`: Pure React code that exposes an interface of props.
-- `render.ts`: Pure D3 rendering code to render wordcloud given a valid D3 selection and other data.
-- `hooks.ts`: React hooks that build and destroy responsive SVG containers with D3.
-- `types.ts`: Typescript types.
-- `utils.ts`: Various simple functions used to compute derived data.
-
-The code is written in `typescript`, linted with `eslint` + `prettier`, and built with `rollup`. Examples and documentations are built with `docz`.
-
-Feel free to contribute by submitting a pull request.
-
-## Wordcloud Generator
-
-Create wordclouds using this wordcloud generator: https://chrisrzhou.github.io/wordcloud-generator/
-
-Features supported:
-
-- Editing and uploading text inputs
-- Various NLP methods (stopwords, ngrams)
-- Wordcloud configurations
-- Export/save/share wordclouds
